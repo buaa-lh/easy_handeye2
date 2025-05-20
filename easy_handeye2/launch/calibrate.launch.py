@@ -4,13 +4,11 @@ from launch.conditions import LaunchConfigurationEquals
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 
-from easy_handeye2.common_launch import arg_calibration_type, arg_tracking_base_frame, arg_tracking_marker_frame, arg_robot_base_frame, \
+from easy_handeye2.common_launch import arg_name, arg_calibration_type, arg_tracking_base_frame, arg_tracking_marker_frame, arg_robot_base_frame, \
     arg_robot_effector_frame
 
 
 def generate_launch_description():
-    arg_name = DeclareLaunchArgument('name')
-
     node_dummy_calib_eih = Node(package='tf2_ros', executable='static_transform_publisher', name='dummy_publisher',
                                 condition=LaunchConfigurationEquals('calibration_type', 'eye_in_hand'),
                                 arguments=f'--x 0 --y 0 --z 0.1 --qx 0 --qy 0 --qz 0 --qw 1'.split(' ') + ['--frame-id', LaunchConfiguration('robot_effector_frame'),
